@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { join, resolve } from 'path';
 import matter from 'gray-matter';
-import { compareDesc } from 'date-fns';
 
 const postsDirectory = resolve('posts');
 
@@ -12,6 +11,9 @@ interface Post {
   image: string;
   description: string;
   category: string;
+  background: string;
+  keywords: string;
+  readingTime: string;
 }
 
 export function getPostSlugs() {
@@ -48,9 +50,7 @@ export function getAllPosts(fields = []) {
   const posts = slugs
     .map(slug => getPostBySlug(slug, fields))
     .sort((post1, post2) =>
-      compareDesc(new Date(post1.date), new Date(post2.date)) > 1 ? '-1' : '1',
+      new Date(post1.date) > new Date(post2.date) ? '-1' : '1',
     );
-  console.log(new Date(posts[0].date));
-
-  return []; //posts;
+  return posts;
 }

@@ -10,6 +10,7 @@ export const MenuLinksWrapper = styled.nav`
 export const MenuLinksList = styled.ul`
   font-size: 1.2rem;
   font-weight: 400;
+  list-style: none;
 `;
 
 export const MenuLinksItem = styled.li`

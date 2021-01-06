@@ -5,7 +5,7 @@ date: '2020-05-13'
 image: 'assets/img/chrome-devtools.jpg'
 category: 'Misc'
 background: '#7AAB13'
-keywords: 'devtools;browser;chrome;firefox'
+keywords: 'development'
 ---
 
 Muitas vezes na hora de desenvolver um site ou uma página web, nos deparamos com a necessidade de testar algumas mudanças em propriedades **CSS**, código **HTML** ou inclusive no **Javascript** para validar rapidamente uma mudança.
