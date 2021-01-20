@@ -25,7 +25,7 @@ export const PostItemWrapper = styled.div`
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 1px 1px 1px rgba(49, 52, 89, 0.5);
-  height: 200px;
+  height: auto;
 `;
 
 export const PostItemMeta = styled.div`

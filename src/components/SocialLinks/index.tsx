@@ -4,7 +4,7 @@ import {
   SocialIconsWrapper,
   SocialLinksList,
   IconWrapper,
-} from '../styles/social-links';
+} from '../../styles/components/social-links';
 import Icons from './icons';
 import links from './content';
 

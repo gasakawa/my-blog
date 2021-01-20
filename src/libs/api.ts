@@ -1,56 +1,110 @@
-import fs from 'fs';
-import { join, resolve } from 'path';
-import matter from 'gray-matter';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import Global from '../interfaces/global';
+import Post from '../interfaces/post';
 
-const postsDirectory = resolve('posts');
+const client = new ApolloClient({
+  uri: process.env.API_URL,
+  cache: new InMemoryCache(),
+});
 
-interface Post {
-  title: string;
-  date: string;
-  slug: string;
-  image: string;
-  description: string;
-  category: string;
-  background: string;
-  keywords: string;
-  readingTime: string;
-}
-
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
-}
-
-export function getPostBySlug(slug, fields = []) {
-  const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
-  const { data: metadata, content } = matter(fileContents);
-
-  const items = {};
-
-  // Ensure only the minimal needed data is exposed
-  fields.forEach(field => {
-    if (field === 'slug') {
-      items[field] = realSlug;
-    }
-    if (field === 'content') {
-      items[field] = content;
-    }
-
-    if (metadata[field]) {
-      items[field] = metadata[field];
-    }
+export const getAllPosts = async (): Promise<Post[]> => {
+  const { data } = await client.query({
+    query: gql`
+      query {
+        posts {
+          id
+          slug
+        }
+      }
+    `,
   });
 
-  return items as Post;
-}
+  return data.posts;
+};
 
-export function getAllPosts(fields = []) {
-  const slugs = getPostSlugs();
-  const posts = slugs
-    .map(slug => getPostBySlug(slug, fields))
-    .sort((post1, post2) =>
-      new Date(post1.date) > new Date(post2.date) ? '-1' : '1',
-    );
-  return posts;
-}
+export const getPost = async (slug: string | string[]): Promise<Post> => {
+  const { data } = await client.query({
+    query: gql`
+      query getPost($slug: String) {
+        posts(where: { slug: $slug }) {
+          title
+          excerpt
+          content
+          creation_date
+          slug
+          tags {
+            name
+            short_name
+          }
+          featured_image {
+            name
+            url
+            formats
+          }
+        }
+      }
+    `,
+    variables: {
+      slug,
+    },
+  });
+  const [post] = data.posts;
+  return post;
+};
+
+export const getPosts = async (limit: number, start: number) => {
+  const { data } = await client.query({
+    query: gql`
+      query getPosts($limit: Int, $start: Int) {
+        posts(sort: "creation_date:desc", limit: $limit, start: $start) {
+          id
+          title
+          slug
+          creation_date
+          excerpt
+          category {
+            name
+            short_name
+            background_color
+          }
+          tags {
+            name
+            short_name
+            color
+          }
+          featured_image {
+            name
+            url
+          }
+        }
+      }
+    `,
+    variables: {
+      limit,
+      start,
+    },
+  });
+
+  return data.posts as Post[];
+};
+
+export const getGlobal = async (): Promise<Global> => {
+  const { data } = await client.query({
+    query: gql`
+      query {
+        global {
+          site_name
+          meta_title
+          meta_description
+          favicon {
+            name
+            url
+          }
+        }
+      }
+    `,
+  });
+
+  const { global } = data;
+  return global;
+};

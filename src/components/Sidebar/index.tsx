@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SidebarWrapper } from '../styles/sidebar';
+import { SidebarWrapper } from '../../styles/components/sidebar';
 import Profile from '../Profile';
 import SocialLinks from '../SocialLinks';
 import Menulinks from '../Menulinks';

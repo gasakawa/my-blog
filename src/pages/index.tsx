@@ -1,8 +1,12 @@
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { GetStaticProps } from 'next';
 import Link from 'next/link';
+import SEO from '../components/SEO';
+import Post from '../interfaces/post';
+import Seo from '../interfaces/seo';
 
-import { getAllPosts } from '../libs/api';
+import { getPost, getPosts } from '../libs/api';
 
 import {
   HomeWrapper,
@@ -13,59 +17,65 @@ import {
   PostItemCategory,
   PostItemMeta,
   PostItemKeywords,
-} from './styles/home';
+} from '../styles/pages/home';
 
-export default function Home({ allPosts }) {
+export default function Home(props) {
+  const posts: Post[] = props.posts;
+  const seo: Seo = {
+    article: false,
+  };
+
   return (
-    <HomeWrapper>
-      {allPosts.map(post => (
-        <PostItemWrapper key={post.slug}>
-          <PostItemMeta>
-            <PostItemDate>
-              {format(new Date(post.date), "d 'de' MMMM 'de' yyyy", {
-                locale: ptBR,
-              })}
-            </PostItemDate>
-            <PostItemCategory backgroundColor={post.background}>
-              <Link href={`/categories/${post.category.toLowerCase()}`}>
-                {post.category}
-              </Link>{' '}
-            </PostItemCategory>
-          </PostItemMeta>
+    <>
+      <SEO {...seo} />
+      <HomeWrapper>
+        {posts.map(post => (
+          <PostItemWrapper key={post.id}>
+            <PostItemMeta>
+              <PostItemDate>
+                {format(new Date(post.creation_date), "d 'de' MMMM 'de' yyyy", {
+                  locale: ptBR,
+                })}
+              </PostItemDate>
+              <PostItemCategory
+                backgroundColor={post.category.background_color}
+              >
+                <Link
+                  href={`/categories/${post.category.short_name.toLowerCase()}`}
+                >
+                  {post.category.name}
+                </Link>{' '}
+              </PostItemCategory>
+            </PostItemMeta>
 
-          <Link href={`/${post.slug}`} passHref>
-            <PostItemLink>{post.title}</PostItemLink>
-          </Link>
+            <Link href={`/${post.slug}`} passHref>
+              <PostItemLink>{post.title}</PostItemLink>
+            </Link>
 
-          <PostItemExcerpt>{post.description}</PostItemExcerpt>
-          {post.keywords !== undefined && (
-            <PostItemKeywords>
-              {post.keywords.split(';').map(keyword => (
-                <span>
-                  <Link href={`/tags/${keyword}`}>{keyword}</Link>
-                </span>
-              ))}
-            </PostItemKeywords>
-          )}
-        </PostItemWrapper>
-      ))}
-    </HomeWrapper>
+            <PostItemExcerpt>{post.excerpt}</PostItemExcerpt>
+            {post.tags !== undefined && (
+              <PostItemKeywords>
+                {post.tags.map(tag => (
+                  <span key={tag.short_name}>
+                    <Link href={`/tags/${tag.short_name}`}>{tag.name}</Link>
+                  </span>
+                ))}
+              </PostItemKeywords>
+            )}
+          </PostItemWrapper>
+        ))}
+      </HomeWrapper>
+    </>
   );
 }
 
-export async function getStaticProps() {
-  const allPosts = getAllPosts([
-    'title',
-    'date',
-    'slug',
-    'image',
-    'description',
-    'category',
-    'background',
-    'keywords',
-  ]);
+export const getStaticProps: GetStaticProps = async () => {
+  const posts = await getPosts(10, 0);
 
   return {
-    props: { allPosts },
+    props: {
+      posts,
+    },
+    revalidate: 20,
   };
-}
+};

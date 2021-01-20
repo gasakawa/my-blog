@@ -1,13 +1,20 @@
+import App from 'next/app';
 import Head from 'next/head';
+import { createContext } from 'react';
 import Sidebar from '../components/Sidebar';
-import GlobalStyles from './styles/global';
-import { LayoutMain } from './styles/layout';
+import { getGlobal } from '../libs/api';
+import GlobalStyles from '../styles/pages/global';
+import { LayoutMain } from '../styles/pages/layout';
+import Global from '../interfaces/global';
 
-export default function MyApp({ Component, pageProps }) {
+export const GlobalContext = createContext({} as Global);
+
+const MyApp = ({ Component, pageProps }) => {
+  const { global } = pageProps;
   return (
     <>
       <Head>
-        <title>Gabriel Asakawa</title>
+        <link rel='shortcut icon' href={global.favicon.url} />
         <meta
           name='viewport'
           content='width=device-width,minimum-scale=1,initial-scale=1.0'
@@ -20,9 +27,24 @@ export default function MyApp({ Component, pageProps }) {
       </Head>
       <GlobalStyles />
       <Sidebar />
-      <LayoutMain>
-        <Component {...pageProps} />
-      </LayoutMain>
+      <GlobalContext.Provider value={global}>
+        <LayoutMain>
+          <Component {...pageProps} />
+        </LayoutMain>
+      </GlobalContext.Provider>
     </>
   );
-}
+};
+
+MyApp.getInitialProps = async ctx => {
+  const appProps = await App.getInitialProps(ctx);
+  const global = await getGlobal();
+  return {
+    ...appProps,
+    pageProps: {
+      global,
+    },
+  };
+};
+
+export default MyApp;

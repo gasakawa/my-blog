@@ -4,7 +4,7 @@ import {
   ProfileAuthor,
   ProfileDescription,
   ProfileWrapper,
-} from '../styles/profile';
+} from '../../styles/components/profile';
 
 const Profile = () => {
   return (

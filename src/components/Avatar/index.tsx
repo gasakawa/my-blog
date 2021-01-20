@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { AvatarWrapper } from '../styles/avatar';
+import { AvatarWrapper } from '../../styles/components/avatar';
 
 const Avatar = () => {
   return (

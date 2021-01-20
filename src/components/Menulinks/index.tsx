@@ -7,7 +7,7 @@ import {
   MenuLinksList,
   MenuLinksWrapper,
   MenuLinksLink,
-} from '../styles/menu-links';
+} from '../../styles/components/menu-links';
 import links from './content';
 
 const Menulinks = () => {
