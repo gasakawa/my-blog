@@ -52,7 +52,10 @@ export const getPost = async (slug: string | string[]): Promise<Post> => {
   return post;
 };
 
-export const getPosts = async (limit: number, start: number) => {
+export const getPosts = async (
+  limit: number,
+  start: number,
+): Promise<Post[]> => {
   const { data } = await client.query({
     query: gql`
       query getPosts($limit: Int, $start: Int) {
@@ -62,6 +65,7 @@ export const getPosts = async (limit: number, start: number) => {
           slug
           creation_date
           excerpt
+          content
           category {
             name
             short_name

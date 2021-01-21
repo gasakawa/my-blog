@@ -58,17 +58,17 @@ export const PostItemLink = styled.a`
 `;
 
 export const PostItemCategory = styled.span<ItemProps>`
-  padding: 2px 5px;
+  padding: 2px 4px;
   background-color: ${props => props.backgroundColor};
   color: #2f3459;
   border-radius: 4px;
   text-transform: uppercase;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   margin-left: 10px;
 
   a {
     text-decoration: none;
-    color: #2f3459;
+    color: #333;
     font-weight: 600;
   }
 `;
@@ -79,10 +79,10 @@ export const PostItemKeywords = styled.div`
   span {
     border: 1px #2f3459 solid;
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     color: #2f3459;
     margin: 10px 10px 0 0;
-    padding: 5px;
+    padding: 2px 4px;
 
     a {
       text-decoration: none;

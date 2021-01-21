@@ -1,20 +1,16 @@
-import App from 'next/app';
 import Head from 'next/head';
-import { createContext } from 'react';
 import Sidebar from '../components/Sidebar';
-import { getGlobal } from '../libs/api';
 import GlobalStyles from '../styles/pages/global';
 import { LayoutMain } from '../styles/pages/layout';
-import Global from '../interfaces/global';
-
-export const GlobalContext = createContext({} as Global);
 
 const MyApp = ({ Component, pageProps }) => {
-  const { global } = pageProps;
   return (
     <>
       <Head>
-        <link rel='shortcut icon' href={global.favicon.url} />
+        <link
+          rel='shortcut icon'
+          href='https://gasakawa-blog.s3.amazonaws.com/favicon_3220a7e784.png'
+        />
         <meta
           name='viewport'
           content='width=device-width,minimum-scale=1,initial-scale=1.0'
@@ -27,24 +23,11 @@ const MyApp = ({ Component, pageProps }) => {
       </Head>
       <GlobalStyles />
       <Sidebar />
-      <GlobalContext.Provider value={global}>
-        <LayoutMain>
-          <Component {...pageProps} />
-        </LayoutMain>
-      </GlobalContext.Provider>
+      <LayoutMain>
+        <Component {...pageProps} />
+      </LayoutMain>
     </>
   );
-};
-
-MyApp.getInitialProps = async ctx => {
-  const appProps = await App.getInitialProps(ctx);
-  const global = await getGlobal();
-  return {
-    ...appProps,
-    pageProps: {
-      global,
-    },
-  };
 };
 
 export default MyApp;

@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import readingTime from 'reading-time';
 
 import { getPost, getAllPosts } from '../libs/api';
 import markdownToHtml from '../libs/markdown-to-html';
@@ -64,7 +65,11 @@ const PostPage = ({ meta, content }) => {
         />
       </Head>
       <PostHeader>
-        <PostDate>{meta.creation_date}</PostDate>
+        <PostDate>
+          {meta.creation_date}
+          &nbsp; - &nbsp;
+          {`${Math.ceil(readingTime(content).minutes)} min de leitura`}
+        </PostDate>
         <PostTitle>{meta.title}</PostTitle>
         <PostDescription>{meta.excerpt}</PostDescription>
         {meta.tags !== undefined && (

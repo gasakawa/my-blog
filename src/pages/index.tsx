@@ -1,12 +1,13 @@
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { GetStaticProps } from 'next';
+
 import Link from 'next/link';
 import SEO from '../components/SEO';
 import Post from '../interfaces/post';
 import Seo from '../interfaces/seo';
 
-import { getPost, getPosts } from '../libs/api';
+import { getPosts } from '../libs/api';
 
 import {
   HomeWrapper,
@@ -23,6 +24,9 @@ export default function Home(props) {
   const posts: Post[] = props.posts;
   const seo: Seo = {
     article: false,
+    metaTitle: 'Programação e Design | Gabriel Asakawa',
+    metaDescription:
+      '"Blog con conteúdo sobre tecnologia, programação, design e emprendedorismo. Fique por dentro dos melhores conteúdos e esteja atualizado',
   };
 
   return (
@@ -44,7 +48,7 @@ export default function Home(props) {
                   href={`/categories/${post.category.short_name.toLowerCase()}`}
                 >
                   {post.category.name}
-                </Link>{' '}
+                </Link>
               </PostItemCategory>
             </PostItemMeta>
 

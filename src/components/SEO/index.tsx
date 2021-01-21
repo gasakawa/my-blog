@@ -1,21 +1,15 @@
 import Head from 'next/head';
-import React, { useContext } from 'react';
-import { GlobalContext } from '../../pages/_app';
+import React from 'react';
 import Seo from '../../interfaces/seo';
 
 const SEO = (seo: Seo) => {
-  const { site_name, meta_title, meta_description } = useContext(GlobalContext);
-
   const allSeo = {
-    metaTitle: seo.metaTitle
-      ? `${seo.metaTitle} | ${site_name}`
-      : `${meta_title} | ${site_name}`,
-    metaDescription: seo.metaDescription
-      ? seo.metaDescription
-      : meta_description,
+    metaTitle: seo.metaTitle,
+    metaDescription: seo.metaDescription,
     featuredImage: seo.featuredImage,
     article: seo.article,
   };
+
   return (
     <Head>
       {allSeo.metaTitle && (
