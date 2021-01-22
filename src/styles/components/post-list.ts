@@ -39,7 +39,7 @@ export const PostItemDate = styled.time`
 `;
 
 export const PostItemExcerpt = styled.p`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 300;
   line-height: 1.2;
   margin-top: 10px;

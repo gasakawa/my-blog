@@ -65,7 +65,6 @@ export const getPosts = async (
           slug
           creation_date
           excerpt
-          content
           category {
             name
             short_name

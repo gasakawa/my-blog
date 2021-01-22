@@ -20,6 +20,7 @@ import {
 import Link from 'next/link';
 import Seo from '../interfaces/seo';
 import SEO from '../components/SEO';
+import Tag from '../interfaces/tag';
 
 const PostPage = ({ meta, content }) => {
   const { isFallback } = useRouter();
@@ -74,7 +75,7 @@ const PostPage = ({ meta, content }) => {
         <PostDescription>{meta.excerpt}</PostDescription>
         {meta.tags !== undefined && (
           <PostTags>
-            {meta.tags.map(tag => (
+            {meta.tags.map((tag: Tag) => (
               <span key={tag.short_name}>
                 <Link href={`/tags/${tag.short_name}`}>{tag.name}</Link>
               </span>

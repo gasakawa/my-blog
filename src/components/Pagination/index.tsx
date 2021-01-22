@@ -23,31 +23,36 @@ const Pagination = ({
       query,
     });
   };
-  return (
-    <PaginationWrapper>
-      {!isFirst && (
-        <Link
-          href={{
-            pathname: `/page/${prevPage}`,
-          }}
-        >
-          Página anterior
-        </Link>
-      )}
-      <p>
-        {currentPage} de {numPages}
-      </p>
-      {!isLast && (
-        <Link
-          href={{
-            pathname: `/page/${nextPage}`,
-          }}
-        >
-          Próxima página
-        </Link>
-      )}
-    </PaginationWrapper>
-  );
+
+  if (numPages > 1) {
+    return (
+      <PaginationWrapper>
+        {!isFirst && (
+          <Link
+            href={{
+              pathname: `/page/${prevPage}`,
+            }}
+          >
+            Página anterior
+          </Link>
+        )}
+        <p>
+          {currentPage} de {numPages}
+        </p>
+        {!isLast && (
+          <Link
+            href={{
+              pathname: `/page/${nextPage}`,
+            }}
+          >
+            Próxima página
+          </Link>
+        )}
+      </PaginationWrapper>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default Pagination;
