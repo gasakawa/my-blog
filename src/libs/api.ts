@@ -112,3 +112,24 @@ export const getGlobal = async (): Promise<Global> => {
   const { global } = data;
   return global;
 };
+
+export const countPosts = async (): Promise<number> => {
+  const response = await fetch(
+    `${process.env.REST_URL}/posts/count?published_at_null=false`,
+  );
+  const totalPosts = await response.json();
+
+  return totalPosts;
+};
+
+export const getPaginationData = async () => {
+  const postsPerPage = Number(process.env.POSTS_PER_PAGE);
+  const totalPosts = await countPosts();
+  const numPages = Math.ceil(totalPosts / postsPerPage);
+
+  return {
+    postsPerPage,
+    totalPosts,
+    numPages,
+  };
+};

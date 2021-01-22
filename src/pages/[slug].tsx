@@ -22,7 +22,7 @@ import Seo from '../interfaces/seo';
 import SEO from '../components/SEO';
 
 const PostPage = ({ meta, content }) => {
-  const { query, isFallback } = useRouter();
+  const { isFallback } = useRouter();
 
   if (isFallback) {
     return <div>Carregando</div>;

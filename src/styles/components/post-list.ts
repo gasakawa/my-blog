@@ -5,7 +5,7 @@ interface ItemProps {
   backgroundColor: string;
 }
 
-export const HomeWrapper = styled.div`
+export const PostListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   grid-gap: 20px;
