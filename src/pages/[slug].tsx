@@ -21,6 +21,7 @@ import Link from 'next/link';
 import Seo from '../interfaces/seo';
 import SEO from '../components/SEO';
 import Tag from '../interfaces/tag';
+import Comments from '../components/Comments';
 
 const PostPage = ({ meta, content }) => {
   const { isFallback } = useRouter();
@@ -86,6 +87,7 @@ const PostPage = ({ meta, content }) => {
       <MainContent>
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </MainContent>
+      <Comments slug={meta.slug} title={meta.title} />
     </>
   );
 };
