@@ -10,6 +10,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.7",
     "axios": "^0.21.1",
+    "canvas": "^2.6.1",
     "date-fns": "^2.16.1",
     "graphql": "^15.4.0",
     "gray-matter": "^4.0.2",
