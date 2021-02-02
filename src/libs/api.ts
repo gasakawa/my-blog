@@ -132,3 +132,81 @@ export const getPaginationData = async () => {
     numPages,
   };
 };
+
+export const getPostsByCategory = async (
+  short_name: string,
+): Promise<Post[]> => {
+  const { data } = await client.query({
+    query: gql`
+      query getPosts($short_name: String) {
+        posts(
+          sort: "creation_date:desc"
+          where: { category: { short_name: $short_name } }
+        ) {
+          id
+          title
+          slug
+          creation_date
+          excerpt
+          category {
+            name
+            short_name
+            background_color
+          }
+          tags {
+            name
+            short_name
+            color
+          }
+          featured_image {
+            name
+            url
+          }
+        }
+      }
+    `,
+    variables: {
+      short_name,
+    },
+  });
+
+  return data.posts as Post[];
+};
+
+export const getPostsByTag = async (short_name: string): Promise<Post[]> => {
+  const { data } = await client.query({
+    query: gql`
+      query getPosts($short_name: String) {
+        posts(
+          sort: "creation_date:desc"
+          where: { tags: { short_name: $short_name } }
+        ) {
+          id
+          title
+          slug
+          creation_date
+          excerpt
+          category {
+            name
+            short_name
+            background_color
+          }
+          tags {
+            name
+            short_name
+            color
+          }
+          featured_image {
+            name
+            url
+          }
+        }
+      }
+    `,
+    variables: {
+      short_name,
+    },
+  });
+
+  return data.posts as Post[];
+};

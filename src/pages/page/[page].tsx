@@ -64,7 +64,6 @@ export const getStaticProps: GetStaticProps = async context => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { numPages } = await getPaginationData();
-  console.log(numPages);
 
   const paths = Array.from({ length: numPages }).map((_, index) => ({
     params: { page: `${index + 1}` },

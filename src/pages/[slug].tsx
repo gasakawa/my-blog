@@ -31,7 +31,7 @@ const PostPage = ({ meta, content }) => {
   }
 
   const seo: Seo = {
-    metaTitle: meta.title,
+    metaTitle: `${meta.title} | Gabriel Asakawa`,
     metaDescription: meta.excerpt,
     featuredImage: meta.featured_image,
     article: true,
