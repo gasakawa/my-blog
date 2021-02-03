@@ -1,6 +1,8 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import Category from '../interfaces/category';
 import Global from '../interfaces/global';
 import Post from '../interfaces/post';
+import Tag from '../interfaces/tag';
 
 const client = new ApolloClient({
   uri: process.env.API_URL,
@@ -209,4 +211,46 @@ export const getPostsByTag = async (short_name: string): Promise<Post[]> => {
   });
 
   return data.posts as Post[];
+};
+
+export const getTagByshortName = async (short_name: string): Promise<Tag> => {
+  const { data } = await client.query({
+    query: gql`
+      query($short_name: String) {
+        tags(where: { short_name: $short_name }) {
+          name
+          short_name
+          color
+        }
+      }
+    `,
+    variables: {
+      short_name,
+    },
+  });
+
+  const [tag] = data.tags;
+  return tag;
+};
+
+export const getCategoryByshortName = async (
+  short_name: string,
+): Promise<Category> => {
+  const { data } = await client.query({
+    query: gql`
+      query($short_name: String) {
+        categories(where: { short_name: $short_name }) {
+          name
+          short_name
+          background_color
+        }
+      }
+    `,
+    variables: {
+      short_name,
+    },
+  });
+
+  const [category] = data.categories;
+  return category;
 };

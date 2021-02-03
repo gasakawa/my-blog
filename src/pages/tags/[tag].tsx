@@ -4,9 +4,10 @@ import React from 'react';
 import PostList from '../../components/PostList';
 import SEO from '../../components/SEO';
 import Seo from '../../interfaces/seo';
-import { getAllPosts, getPostsByTag } from '../../libs/api';
+import { getAllPosts, getPostsByTag, getTagByshortName } from '../../libs/api';
+import { TagPageWrapper } from '../../styles/pages/tag';
 
-const Tag = ({ posts }) => {
+const Tag = ({ posts, tag }) => {
   const { isFallback } = useRouter();
 
   if (isFallback) {
@@ -23,6 +24,9 @@ const Tag = ({ posts }) => {
   return (
     <>
       <SEO {...seo} />
+      <TagPageWrapper>
+        <h1>Posts de {tag.name} </h1>
+      </TagPageWrapper>
       <PostList posts={posts} />
     </>
   );
@@ -32,10 +36,12 @@ export const getStaticProps: GetStaticProps = async context => {
   const { tag } = context.params;
 
   const posts = await getPostsByTag(`${tag}`);
+  const tagObj = await getTagByshortName(`${tag}`);
 
   return {
     props: {
       posts,
+      tag: tagObj,
     },
     revalidate: 20,
   };
