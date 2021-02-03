@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import readingTime from 'reading-time';
 
-import { getPost, getAllPosts } from '../libs/api';
+import { getPost, getAllPosts } from '../libs/posts';
 import markdownToHtml from '../libs/markdown-to-html';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { format } from 'date-fns';

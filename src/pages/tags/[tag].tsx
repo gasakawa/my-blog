@@ -4,7 +4,8 @@ import React from 'react';
 import PostList from '../../components/PostList';
 import SEO from '../../components/SEO';
 import Seo from '../../interfaces/seo';
-import { getAllPosts, getPostsByTag, getTagByshortName } from '../../libs/api';
+import { getAllPosts, getPostsByTag } from '../../libs/posts';
+import { getAllTags, getTagByShortName } from '../../libs/tags';
 import { TagPageWrapper } from '../../styles/pages/tag';
 
 const Tag = ({ posts, tag }) => {
@@ -36,7 +37,7 @@ export const getStaticProps: GetStaticProps = async context => {
   const { tag } = context.params;
 
   const posts = await getPostsByTag(`${tag}`);
-  const tagObj = await getTagByshortName(`${tag}`);
+  const tagObj = await getTagByShortName(`${tag}`);
 
   return {
     props: {
@@ -48,12 +49,12 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getAllPosts();
+  const tags = await getAllTags();
 
   return {
-    paths: posts.map(post => ({
+    paths: tags.map(tag => ({
       params: {
-        tag: post.slug,
+        tag: tag.short_name,
       },
     })),
     fallback: true,

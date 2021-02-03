@@ -4,7 +4,7 @@ import Pagination from '../../components/Pagination';
 import PostList from '../../components/PostList';
 import SEO from '../../components/SEO';
 import Seo from '../../interfaces/seo';
-import { getPaginationData, getPosts } from '../../libs/api';
+import { getPaginationData, getPosts } from '../../libs/posts';
 
 const Page = ({
   posts,

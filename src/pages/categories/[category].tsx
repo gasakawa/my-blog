@@ -5,10 +5,11 @@ import PostList from '../../components/PostList';
 import SEO from '../../components/SEO';
 import Seo from '../../interfaces/seo';
 import {
-  getAllPosts,
-  getCategoryByshortName,
-  getPostsByCategory,
-} from '../../libs/api';
+  getAllCategories,
+  getCategoryByShortName,
+} from '../../libs/categories';
+import { getPostsByCategory } from '../../libs/posts';
+
 import { CategoryPageWrapper } from '../../styles/pages/category';
 
 const Category = ({ posts, category }) => {
@@ -40,7 +41,7 @@ export const getStaticProps: GetStaticProps = async context => {
   const { category } = context.params;
 
   const posts = await getPostsByCategory(`${category}`);
-  const categoryObj = await getCategoryByshortName(`${category}`);
+  const categoryObj = await getCategoryByShortName(`${category}`);
 
   return {
     props: {
@@ -52,12 +53,12 @@ export const getStaticProps: GetStaticProps = async context => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const posts = await getAllPosts();
+  const categories = await getAllCategories();
 
   return {
-    paths: posts.map(post => ({
+    paths: categories.map(category => ({
       params: {
-        category: post.slug,
+        category: category.short_name,
       },
     })),
     fallback: true,
