@@ -58,7 +58,6 @@ export const getStaticProps: GetStaticProps = async context => {
       prevPage: pageInt - 1,
       nextPage: pageInt + 1,
     },
-    revalidate: 20,
   };
 };
 

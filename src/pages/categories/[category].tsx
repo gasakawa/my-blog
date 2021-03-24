@@ -48,7 +48,6 @@ export const getStaticProps: GetStaticProps = async context => {
       posts,
       category: categoryObj,
     },
-    revalidate: 20,
   };
 };
 

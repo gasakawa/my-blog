@@ -44,7 +44,6 @@ export const getStaticProps: GetStaticProps = async context => {
       posts,
       tag: tagObj,
     },
-    revalidate: 20,
   };
 };
 

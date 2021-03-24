@@ -54,6 +54,5 @@ export const getStaticProps: GetStaticProps = async () => {
       prevPage: 0,
       nextPage: 2,
     },
-    revalidate: 20,
   };
 };

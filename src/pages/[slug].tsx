@@ -42,28 +42,28 @@ const PostPage = ({ meta, content }) => {
       <SEO {...seo} />
       <Head>
         <link
-          rel='preload'
-          href='https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css'
-          as='script'
+          rel="preload"
+          href="https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css"
+          as="script"
         />
         <link
-          rel='preload'
-          href='https://unpkg.com/prismjs@1.23.0/themes/prism-coy.css'
-          as='script'
+          rel="preload"
+          href="https://unpkg.com/prismjs@1.23.0/themes/prism-coy.css"
+          as="script"
         />
         <link
-          rel='preload'
-          href='https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css'
-          as='script'
+          rel="preload"
+          href="https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css"
+          as="script"
         />
         <link
-          rel='preload'
-          href='https://unpkg.com/prismjs@1.23.0/themes/prism-funky.css'
-          as='script'
+          rel="preload"
+          href="https://unpkg.com/prismjs@1.23.0/themes/prism-funky.css"
+          as="script"
         />
         <link
           href={`https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css`}
-          rel='stylesheet'
+          rel="stylesheet"
         />
       </Head>
       <PostHeader>
@@ -103,7 +103,7 @@ export const getStaticProps: GetStaticProps = async context => {
       "d 'de' MMMM 'de' yyyy",
       {
         locale: ptBR,
-      },
+      }
     ),
     slug: post.slug,
     tags: post.tags,
@@ -117,7 +117,6 @@ export const getStaticProps: GetStaticProps = async context => {
       meta,
       content,
     },
-    revalidate: 120,
   };
 };
 
