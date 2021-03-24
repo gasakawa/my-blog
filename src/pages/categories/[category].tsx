@@ -60,7 +60,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         category: category.short_name,
       },
     })),
-    fallback: true,
+    fallback: false,
   };
 };
 

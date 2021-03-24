@@ -56,7 +56,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         tag: tag.short_name,
       },
     })),
-    fallback: true,
+    fallback: false,
   };
 };
 
