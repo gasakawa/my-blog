@@ -12,6 +12,7 @@ import {
   FaWordpress,
   FaHtml5,
 } from 'react-icons/fa';
+import { DiOpenshift } from 'react-icons/di';
 import { IoLogoJavascript } from 'react-icons/io';
 import { GrGatsbyjs } from 'react-icons/gr';
 import { FiFigma } from 'react-icons/fi';
@@ -29,6 +30,8 @@ import {
   SiPostgresql,
   SiMicrosoftsqlserver,
   SiMysql,
+  SiRedis,
+  SiMicrosoftazure,
 } from 'react-icons/si';
 import Image from 'next/image';
 
@@ -65,7 +68,11 @@ const About = () => {
           já se fazem mais de 16 anos brincando com máquinas.
           <br />
           <br />
-          Hoje atúo como Tech Lead na empresa&nbsp;
+          Hoje atúo como Lead Software Engineer na empresa&nbsp;
+          <a href='https://epam.com/' target='_blank' rel='noopener noreferer'>
+            EPAM Systems (Anywhere)
+          </a>
+          &nbsp;e já trabalhei em empresas como&nbsp;
           <a
             href='https://scalait.com/'
             target='_blank'
@@ -73,7 +80,7 @@ const About = () => {
           >
             Stefanini Scala
           </a>
-          &nbsp;e já trabalhei em empresas como&nbsp;
+          , &nbsp;
           <a
             href='https://habber.com/'
             target='_blank'
@@ -178,11 +185,6 @@ const About = () => {
               <SiMysql />
               <p>MySQL</p>
             </span>
-          </AboutIcons>
-        </AboutSkills>
-        <AboutSkills>
-          <h2>Estou aprendendo</h2>
-          <AboutIcons>
             <span>
               <FaAws />
               <p>AWS</p>
@@ -191,6 +193,23 @@ const About = () => {
               <Image src='/nextjs-3.svg' width={32} height={32} />
               <p>NextJS</p>
             </span>
+            <span>
+              <DiOpenshift />
+              <p>Openshift</p>
+            </span>
+            <span>
+              <SiRedis />
+              <p>Redis</p>
+            </span>
+          </AboutIcons>
+        </AboutSkills>
+        <AboutSkills>
+          <h2>Estou aprendendo</h2>
+          <AboutIcons>
+            <span>
+              <SiMicrosoftazure />
+              <p>MS Azure</p>
+            </span>{' '}
             <span>
               <SiGooglecloud />
               <p>Google Cloud</p>
