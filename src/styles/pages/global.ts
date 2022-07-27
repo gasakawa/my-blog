@@ -14,7 +14,9 @@ body {
     -webkit-font-smoothing: antialiased;
     font-family: -apple-system, BlinkMacSystemFont, "Montserrat", "Poppins", sans-serif;
 }
-
-
 `;
 export default GlobalStyles;
+
+export const light = {
+  body: '#ffffff',
+};

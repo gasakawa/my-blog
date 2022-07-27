@@ -23,8 +23,8 @@ import {
   SiIbm,
   SiTypescript,
   SiAdobephotoshop,
-  SiAdobelightroomcc,
-  SiAdobepremiere,
+  SiAdobelightroom,
+  SiAdobepremierepro,
   SiAdobexd,
   SiAdobeindesign,
   SiPostgresql,
@@ -219,7 +219,7 @@ const About = () => {
               <p>Photoshop</p>
             </span>
             <span>
-              <SiAdobelightroomcc />
+              <SiAdobelightroom />
               <p>Lightroom</p>
             </span>
             <span>
@@ -227,7 +227,7 @@ const About = () => {
               <p>InDesign</p>
             </span>
             <span>
-              <SiAdobepremiere />
+              <SiAdobepremierepro />
               <p>Premiere</p>
             </span>
             <span>
