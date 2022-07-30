@@ -12,10 +12,9 @@ export const AvatarWrapper = styled.div`
     height: 10rem;
     margin: auto;
     width: 10rem;
-
-    ${media.lessThan('large')`
-    height: 2.875rem;
-    width: 2.875rem;
-  `}
   }
+
+  ${media.lessThan('large')`
+      display: none
+  `}
 `;
