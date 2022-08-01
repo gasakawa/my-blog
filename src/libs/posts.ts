@@ -1,8 +1,6 @@
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import Category from '../interfaces/category';
 import Global from '../interfaces/global';
-import Post from '../interfaces/post';
-import Tag from '../interfaces/tag';
+import Post, { PostLink } from '../interfaces/post';
 
 const client = new ApolloClient({
   uri: process.env.API_URL,
@@ -211,4 +209,54 @@ export const getPostsByTag = async (short_name: string): Promise<Post[]> => {
   });
 
   return data.posts as Post[];
+};
+
+export const getPreviousPost = async (
+  creationDate: Date,
+): Promise<PostLink | null> => {
+  const { data } = await client.query({
+    query: gql`
+      query getPosts($creationDate: DateTime) {
+        posts(
+          sort: "creation_date:desc"
+          where: { creation_date_lt: $creationDate }
+          limit: 1
+        ) {
+          title
+          slug
+        }
+      }
+    `,
+    variables: {
+      creationDate,
+    },
+  });
+
+  const [post] = data.posts;
+  return post !== undefined ? (post as PostLink) : null;
+};
+
+export const getNextPost = async (
+  creationDate: Date,
+): Promise<PostLink | null> => {
+  const { data } = await client.query({
+    query: gql`
+      query getPosts($creationDate: DateTime) {
+        posts(
+          sort: "creation_date:asc"
+          where: { creation_date_gt: $creationDate }
+          limit: 1
+        ) {
+          title
+          slug
+        }
+      }
+    `,
+    variables: {
+      creationDate,
+    },
+  });
+
+  const [post] = data.posts;
+  return post !== undefined ? (post as PostLink) : null;
 };

@@ -3,7 +3,12 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import readingTime from 'reading-time';
 
-import { getPost, getAllPosts } from '../libs/posts';
+import {
+  getPost,
+  getAllPosts,
+  getPreviousPost,
+  getNextPost,
+} from '../libs/posts';
 import markdownToHtml from '../libs/markdown-to-html';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { format } from 'date-fns';
@@ -16,14 +21,19 @@ import {
   PostDescription,
   PostTags,
   MainContent,
+  PostBackListing,
 } from '../styles/components/post-page';
 import Link from 'next/link';
 import Seo from '../interfaces/seo';
 import SEO from '../components/SEO';
 import Tag from '../interfaces/tag';
-import Comments from '../components/Comments';
+import RecommendedPost from '../components/RecommendedPost';
+import { PostLink } from '../interfaces/post';
 
-const PostPage = ({ meta, content }) => {
+const PostPage = props => {
+  const { meta, content } = props;
+  const previousPost = props.previousPost as PostLink;
+  const nextPost = props.nextPost as PostLink;
   const { isFallback } = useRouter();
 
   if (isFallback) {
@@ -42,31 +52,34 @@ const PostPage = ({ meta, content }) => {
       <SEO {...seo} />
       <Head>
         <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css"
-          as="script"
+          rel='preload'
+          href='https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css'
+          as='script'
         />
         <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@1.23.0/themes/prism-coy.css"
-          as="script"
+          rel='preload'
+          href='https://unpkg.com/prismjs@1.23.0/themes/prism-coy.css'
+          as='script'
         />
         <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css"
-          as="script"
+          rel='preload'
+          href='https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css'
+          as='script'
         />
         <link
-          rel="preload"
-          href="https://unpkg.com/prismjs@1.23.0/themes/prism-funky.css"
-          as="script"
+          rel='preload'
+          href='https://unpkg.com/prismjs@1.23.0/themes/prism-funky.css'
+          as='script'
         />
         <link
           href={`https://unpkg.com/prismjs@1.23.0/themes/prism-okaidia.css`}
-          rel="stylesheet"
+          rel='stylesheet'
         />
       </Head>
       <PostHeader>
+        <PostBackListing>
+          <Link href={`/`}>&larr; Voltar na listagem</Link>
+        </PostBackListing>
         <PostDate>
           {meta.creation_date}
           &nbsp; - &nbsp;
@@ -87,7 +100,7 @@ const PostPage = ({ meta, content }) => {
       <MainContent>
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </MainContent>
-      <Comments slug={meta.slug} title={meta.title} />
+      <RecommendedPost previousPost={previousPost} nextPost={nextPost} />
     </>
   );
 };
@@ -95,6 +108,8 @@ const PostPage = ({ meta, content }) => {
 export const getStaticProps: GetStaticProps = async context => {
   const { slug } = context.params;
   const post = await getPost(slug);
+  const previousPost = (await getPreviousPost(post.creation_date)) as PostLink;
+  const nextPost = (await getNextPost(post.creation_date)) as PostLink;
   const meta = {
     title: post.title,
     excerpt: post.excerpt,
@@ -103,7 +118,7 @@ export const getStaticProps: GetStaticProps = async context => {
       "d 'de' MMMM 'de' yyyy",
       {
         locale: ptBR,
-      }
+      },
     ),
     slug: post.slug,
     tags: post.tags,
@@ -116,6 +131,20 @@ export const getStaticProps: GetStaticProps = async context => {
     props: {
       meta,
       content,
+      nextPost:
+        nextPost !== null
+          ? {
+              title: nextPost.title,
+              slug: nextPost.slug,
+            }
+          : null,
+      previousPost:
+        previousPost !== null
+          ? {
+              title: previousPost.title,
+              slug: previousPost.slug,
+            }
+          : null,
     },
   };
 };

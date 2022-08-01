@@ -33,3 +33,8 @@ export default interface Post {
     };
   };
 }
+
+export type PostLink = {
+  title: string;
+  slug: string;
+};

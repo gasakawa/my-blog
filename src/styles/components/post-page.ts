@@ -23,6 +23,25 @@ export const PostDate = styled.p`
   `}
 `;
 
+export const PostBackListing = styled.div`
+  font-size: 1.1rem;
+  font-weight: 200;
+  padding: 0 1.4rem;
+  display: flex;
+  margin-bottom: 1rem;
+
+  a {
+    text-decoration: none;
+    color: #2f3459;
+    font-size: 0.8rem;
+    font-weight: 300;
+
+    &:hover {
+      color: #1fa1f2;
+    }
+  }
+`;
+
 export const PostTitle = styled.h1`
   font-size: 4rem;
   font-weight: 700;
